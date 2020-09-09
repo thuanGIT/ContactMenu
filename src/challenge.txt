@@ -1,0 +1,58 @@
+interface Movable {
+    int getX();
+    int getY();
+    void setX(int newX);
+    void setY(int newY);
+}
+
+interface Storable {
+    int getInventoryLength();
+    String getInventoryItem(int index);
+    void setInventoryItem(int index, String item);
+}
+
+interface Command {
+    void execute();
+    void undo();
+}
+
+class CommandMove implements Command {
+    Movable entity;
+    int xMovement;
+    int yMovement;
+    static java.util.Stack<Integer[]> storage =  new java.util.Stack();
+    
+    @Override
+    public void execute() {
+        storage.push(new Integer[]{entity.getX(), entity.getY()});
+        entity.setX(xMovement);
+        entity.setY(yMovement);
+    }
+    @Override
+    public void undo() {
+        entity.setX(storage.peek()[0]);
+        entity.setY(storage.peek()[1]);
+        storage.pop();
+    }
+}
+
+class CommandPutItem implements Command {
+    Storable entity;
+    String item;
+    static java.util.Stack<Integer> storage =  new java.util.Stack();
+    
+    @Override
+    public void execute() {
+        for (int index = 0; index < entity.getInventoryLength(); index++) {
+            if (entity.getInventoryItem(index) == null) {
+                entity.setInventoryItem(index, item);
+                storage.push(index);
+                break;
+            } 
+        }
+    }
+    @Override
+    public void undo() {
+        entity.setInventoryItem(storage.pop(), null);
+    }
+}
