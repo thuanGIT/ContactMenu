@@ -91,7 +91,6 @@ public class Main {
                     String value = input.nextLine().trim();
 
                     if (person) {
-                       
                         switch (field.toLowerCase()) {
                             case "name": contact.setName(value);;break;
                             case "surname":((PersonContact)contact).setSurName(value);break;
