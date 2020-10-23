@@ -45,18 +45,19 @@ class PersonContact extends Contacts {
             this.surname = "[no data]";
         else
             this.surname = surname;
-
     }
 
     public void setBirthDate (String birthDate) {
         super.lastEditted = LocalDateTime.now();
         if (checkBirthDate(birthDate))
             this.birthDate = LocalDate.parse(birthDate);
+        else this.birthDate = null;
     }
     public static boolean checkBirthDate(String birthDate) {
         String valid = "^(0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01])[-](19|20)\\d\\d$";
         return Pattern.compile(valid).matcher(birthDate).find();
     }
+
 
     @Override
     public String toString() {
