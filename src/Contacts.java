@@ -3,7 +3,12 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.regex.Pattern;
 
-
+/**
+ * @version - 2.1
+ * @author - thuanGIT
+ * @since - October 28th, 20202
+ * 
+ */
 public abstract class Contacts {
     public String name;
     public PhoneNum phoneNum;
@@ -17,11 +22,20 @@ public abstract class Contacts {
         this.phoneNum = new PhoneNum(phoneNum); 
         setName(name);
     }
+    /**
+     * @param name - the first name of a person/ name of a store
+     */
+     
     public void setName(String name) {
-        if (name == null || name.isEmpty())
+        if (name == null || name.isEmpty()) 
             this.name = "[no data]";
         else
             this.name = name;
+        this.lastEditted = LocalDateTime.now();
+    }
+
+    protected void updateDate() {
+        // Update the editted date
         this.lastEditted = LocalDateTime.now();
     }
     
@@ -39,20 +53,35 @@ class PersonContact extends Contacts {
         System.out.println("The record added.");
     }
 
+    /**
+     * 
+     * @param surname
+     */
     public void setSurName(String surname) {
-        super.lastEditted = LocalDateTime.now();
+        updateDate();
         if (surname == null || surname.isEmpty())
             this.surname = "[no data]";
         else
             this.surname = surname;
     }
+    /**
+     * 
+     * @param birthDate
+     * @see PersonContact#checkBirthDate(String)
+     */
 
     public void setBirthDate (String birthDate) {
-        super.lastEditted = LocalDateTime.now();
+        updateDate();
         if (checkBirthDate(birthDate))
             this.birthDate = LocalDate.parse(birthDate);
         else this.birthDate = null;
     }
+    /**
+     * 
+     * @param birthDate
+     * @return true if valid (dd-mm-yy) or false if invalid (otherwise)
+     * @
+     */
     public static boolean checkBirthDate(String birthDate) {
         String valid = "^(0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01])[-](19|20)\\d\\d$";
         return Pattern.compile(valid).matcher(birthDate).find();

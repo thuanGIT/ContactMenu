@@ -10,6 +10,8 @@ public class Main {
         while (!action.equals("exit")) {
             System.out.print((!badInput)?"Enter action (add, remove, edit, count, list, info, exit): ": "");
             action = input.nextLine().toLowerCase().trim();
+
+
             if (action.equals("add")) {
                 System.out.print("Enter the type (person, organization): ");
                 String type = input.nextLine().toLowerCase().trim();
@@ -50,7 +52,6 @@ public class Main {
                 }
 
 
-                
             } else if (action.equals("remove")) {
                 if (record.isEmpty()) {
                     System.out.println("No records to remove!");
@@ -142,6 +143,9 @@ public class Main {
             } else {
                 badInput = true;
             }
+
+            // Separate previous action with \n
+            System.out.println();
         }
         
         input.close();
@@ -150,12 +154,13 @@ public class Main {
     public static void printRecord(java.util.ArrayList<Contacts> record) {
         for (int i = 0; i < record.size(); i++) {
             Contacts e = record.get(i);
-            System.out.printf("%d. %s %s, %s\n", i+1, e.toString());
+            if (e instanceof PersonContact)
+                System.out.printf("%d. %s\n", i+1, (((PersonContact)e).name + " " + ((PersonContact)e).surname));
+            else
+                System.out.printf("%d. %s\n", i+1, e.name);
         }
     }
 
-
-   
 }
 
 
