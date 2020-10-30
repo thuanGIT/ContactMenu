@@ -2,6 +2,7 @@ package contacts;
 
 public class StoreContact extends Contacts {
     public String address;
+    
     public StoreContact(String name, String address, String phoneNum) {
         super(name, phoneNum);
         this.address = address;
