@@ -80,6 +80,7 @@ class PersonContact extends Contacts {
      * 
      * @param birthDate
      * @return true if valid (dd-mm-yy) or false if invalid (otherwise)
+     * This allows the same format with the requirement
      * @
      */
     public static boolean checkBirthDate(String birthDate) {
@@ -162,7 +163,8 @@ class Gender {
         String g = gender.toUpperCase().trim();
         if (checkGender(g))
             this.gender = g;
-        else this.gender = "[no data]";     
+        else this.gender = "[no data]";
+    
     }
 
     public static boolean checkGender(String g) {

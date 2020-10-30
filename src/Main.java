@@ -8,17 +8,21 @@ public class Main {
         java.util.ArrayList<Contacts> record = new java.util.ArrayList<Contacts>();
         boolean badInput = false;
         while (!action.equals("exit")) {
+            // Start with a new action
             System.out.print((!badInput)?"Enter action (add, remove, edit, count, list, info, exit): ": "");
             action = input.nextLine().toLowerCase().trim();
 
-
+             /**
+              * Add option
+                -   Choose between a person/ a store contact
+              */
             if (action.equals("add")) {
                 System.out.print("Enter the type (person, organization): ");
                 String type = input.nextLine().toLowerCase().trim();
                 
-
+                // Divide into cases
                 switch(type) {
-                    case Contacts.PERSON: 
+                    case Contacts.PERSON: // Person case => Ask questions on a person's information
                         System.out.print("Enter the name of the person: ");
                         String name = input.nextLine();
                         System.out.print("Enter the surname of the person: ");
@@ -36,7 +40,8 @@ public class Main {
                         record.add(new PersonContact(name, surname,phoneNum, gender, birthDate));
 
                         break;
-                    case Contacts.STORE: 
+
+                    case Contacts.STORE: // Store case => Ask store's information
                         System.out.print("Enter the organization name: ");
                         String storeName = input.nextLine();
                         System.out.print("Enter the address: ");
@@ -76,20 +81,22 @@ public class Main {
 
                     Contacts contact = record.get(index);
                     boolean person = false;
-                    switch (contact.getClass().getName().toLowerCase()) {
-                        case Contacts.PERSON:
-                            System.out.print("Select a field (name, surname, birth, gender, number):");
-                            person = true;
-                            break;
-                        case Contacts.STORE:
-                            System.out.print("Select a field (organization name, address, number):");
-                            break;
-                        default: continue;
+                    
+                    // Check if that contact is a person
+                    if (contact instanceof PersonContact){
+                        System.out.print("Select a field (name, surname, birth, gender, number):");
+                        person = true;
+                    }
+                    else {
+                        System.out.print("Select a field (organization name, address, number):"); 
                     }
                    
                     String field = input.nextLine().trim().toLowerCase();
                     System.out.print("Enter " + field + ": ");
                     String value = input.nextLine().trim();
+
+                    // Print message
+                    System.out.println("The record updated!");
 
                     if (person) {
                         switch (field.toLowerCase()) {
@@ -116,33 +123,35 @@ public class Main {
                             default: System.out.println("Not supported!");
                     }
 
-                    System.out.println("The record updated!");
+                   
                 }
             }
-                
+            
+            // Printing size of the contact book
             } else if (action.equals("count")) {
                 System.out.printf("The Phone Book has %d records.\n", record.size());
-                
+            
+            // List the name of the contacts
             } else if (action.equals("list")) {
                 printRecord(record);
+            
+            // Display information of contact based on 
             } else if (action.equals("info")) {
-                for (int i = 0; i < record.size();i++) {
-                    Contacts e = record.get(i);
-                    if (e instanceof PersonContact) {
-                        PersonContact p = (PersonContact)e;
-                        System.out.println((i+1) + ". " + p.name + " " + p.surname);
-                    } else {
-                        StoreContact s = (StoreContact)e;
-                        System.out.println((i+1) + ". " + s.name);
-                    }
-                }
+               // Print record (just name)
+                printRecord(record);
+
+                // Ask specifically which record
                 System.out.print("Enter index to show info: ");
                 int index = input.nextInt() - 1;
                 input.nextLine();
                 System.out.print(record.get(index).toString());
             } else {
+                // If an action is incorrectly typed
                 badInput = true;
             }
+
+            // Set badInput to false
+            badInput = false;
 
             // Separate previous action with \n
             System.out.println();
@@ -151,6 +160,7 @@ public class Main {
         input.close();
         
     }
+
     public static void printRecord(java.util.ArrayList<Contacts> record) {
         for (int i = 0; i < record.size(); i++) {
             Contacts e = record.get(i);
