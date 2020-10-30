@@ -99,7 +99,6 @@ public class Main {
                     System.out.println("The record updated!");
 
                     if (person) {
-                       
                         switch (field.toLowerCase()) {
                             case "name": contact.setName(value);;break;
                             case "surname":((PersonContact)contact).setSurName(value);break;
