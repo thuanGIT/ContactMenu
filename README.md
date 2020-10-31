@@ -1,9 +1,12 @@
-# CONTACT MENU 
-
 # DESCRIPTION
+*   This project implements a digital contact book.
+*   Features:
+    *   add: Adding a new contact
+    *   edit: Edit an existing contact
+    *   remove: Remove an existing contact
+    *   count: Return the number of contacts in the book
+    *   info: Return full information of a contact
 
-
-# HINTS
 
 
 **CRITERIA FOR VALID PHONE NUMBERS:** 
